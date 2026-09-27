@@ -1,0 +1,72 @@
+{
+  "title": "aegis-curated-python (scientific_numerics)",
+  "generated_at": "2026-09-27T08:30:48.505898+00:00",
+  "package": {
+    "directory": "data\\product",
+    "dataset_file": "aegis-curated-python-0.1.0.jsonl",
+    "manifest": "MANIFEST.json",
+    "sample": "sample.jsonl",
+    "sha256": "c485e9e4ca8070c7bb5e81c344f32ded8db236b39fc649ca589dae6321dcd3c6"
+  },
+  "summary": "400 curated scientific_numerics instruction/code pairs, each scored against six checkable quality signals, deduplicated, and execution-verified where the build environment allows.",
+  "claims": [
+    {
+      "claim": "400 records, curated from 5,003 source records",
+      "source": "MANIFEST.json"
+    },
+    {
+      "claim": "retention rate 0.0800",
+      "source": "MANIFEST.json"
+    },
+    {
+      "claim": "28 of 200 examined records executed cleanly",
+      "source": "verify.json"
+    },
+    {
+      "claim": "verified rate 0.6087 of executable records",
+      "source": "verify.json"
+    }
+  ],
+  "tiers": [
+    {
+      "name": "Personal",
+      "price": {
+        "amount": "36.52000000",
+        "currency": "USD"
+      },
+      "what_you_get": "the full 400-record scientific_numerics set, single user, no resale"
+    },
+    {
+      "name": "Team",
+      "price": {
+        "amount": "146.08000000",
+        "currency": "USD"
+      },
+      "what_you_get": "up to 10 seats, internal use, no redistribution"
+    },
+    {
+      "name": "Commercial",
+      "price": {
+        "amount": "913.00000000",
+        "currency": "USD"
+      },
+      "what_you_get": "unlimited internal use, derived works permitted, no resale"
+    }
+  ],
+  "what_is_not_claimed": [
+    "15 examined records raised an error and are not usable for training as they stand",
+    "29 examined records were refused before execution because they contain dangerous patterns: process spawning, raw sockets, or filesystem deletion. They are excluded. Their presence in the source corpus is itself a warning about scraped data.",
+    "124 examined records could not be executed here because a third-party package was absent. That is an environment limitation, not a correctness verdict, so they remain unverified in both directions.",
+    "only 200 of 400 shipped records were examined at all; the other 200 were never executed",
+    "no human review of correctness",
+    "no check that responses compile against their stated imports",
+    "no price was observed for comparable data anywhere; these tiers are a computed starting point, not a market-derived price"
+  ],
+  "licence": "The upstream source is Apache-2.0. Individual records derive from third-party code whose own licences may apply. Confirm before redistribution. This has NOT been verified by a lawyer.",
+  "publish_checklist": [
+    "review the claims above against the files; they are generated, but you are responsible for their accuracy",
+    "decide whether to publish the sample as-is",
+    "get a lawyer's view on the upstream licence before taking money",
+    "confirm the pricing against one real comparable sale if you can find one"
+  ]
+}

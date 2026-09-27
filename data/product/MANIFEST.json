@@ -1,0 +1,77 @@
+{
+  "dataset": "aegis-curated-python",
+  "version": "0.1.0",
+  "built_at": "2026-09-26T18:01:23.495967+00:00",
+  "source": {
+    "path": "data\\training\\starcoder_python_instruct.jsonl",
+    "note": "Derived from a public dataset. The source is free and redistributable; the value here is curation, not access."
+  },
+  "licence": {
+    "note": "The upstream source is Apache-2.0. Individual records derive from third-party code whose own licences may apply. Confirm before redistribution. This has NOT been verified by a lawyer."
+  },
+  "curation": {
+    "records_read": 5003,
+    "records_kept": 400,
+    "records_dropped": 4602,
+    "retention_rate": "0.0800",
+    "dropped_by_reason": {
+      "below_quality_floor": 70,
+      "different_domain": 1836,
+      "no_domain_match": 2352,
+      "response_too_short": 344
+    },
+    "kept_by_domain": {
+      "scientific_numerics": 400
+    }
+  },
+  "domain_filter": "scientific_numerics",
+  "thresholds": {
+    "min_quality_score": "0.60",
+    "near_duplicate_similarity": "0.80",
+    "min_instruction_chars": 40,
+    "min_response_chars": 200
+  },
+  "quality_signals": [
+    {
+      "name": "has_code_structure",
+      "weight": "0.25",
+      "means": "defines a function, class, or import"
+    },
+    {
+      "name": "has_error_handling",
+      "weight": "0.15",
+      "means": "handles failure paths"
+    },
+    {
+      "name": "has_type_hints",
+      "weight": "0.10",
+      "means": "annotates signatures"
+    },
+    {
+      "name": "has_docstring",
+      "weight": "0.10",
+      "means": "documents the module or function"
+    },
+    {
+      "name": "has_usage_example",
+      "weight": "0.15",
+      "means": "shows how it is called"
+    },
+    {
+      "name": "response_substantial",
+      "weight": "0.25",
+      "means": "long enough to be complete"
+    }
+  ],
+  "outputs": {
+    "full": "data\\product\\aegis-curated-python-0.1.0.jsonl",
+    "sample": "data\\product\\sample.jsonl",
+    "sample_records": 100,
+    "sha256": "c485e9e4ca8070c7bb5e81c344f32ded8db236b39fc649ca589dae6321dcd3c6"
+  },
+  "not_verified": [
+    "generated code has not been executed or unit tested",
+    "no human review of correctness",
+    "no check that responses compile against their stated imports"
+  ]
+}

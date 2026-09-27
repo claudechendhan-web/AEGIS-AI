@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aegisai"
+version = "0.2.0"
+description = "AEGISAI Phase 1 local-first persistent agent foundation"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
+
+[project.optional-dependencies]
+test = ["pytest>=8.0"]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+    "mypy>=1.11",
+]
+data = [
+    "pyarrow>=14.0",
+]
+
+[project.scripts]
+aegisai = "cli.main:main"
+
+[tool.setuptools]
+packages = [
+    "core",
+    "runtime",
+    "inference",
+    "memory",
+    "tools",
+    "agents",
+    "observability",
+    "security",
+    "storage",
+    "api",
+    "cli",
+    "training",
+    "data_pipeline",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra"

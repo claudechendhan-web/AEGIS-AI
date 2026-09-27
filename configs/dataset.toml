@@ -1,0 +1,258 @@
+[paths]
+root = "datasets"
+raw = "raw"
+staging = "staging"
+processed = "processed"
+manifests = "manifests"
+
+[limits]
+max_records = 6000
+train_ratio = 0.8
+validation_ratio = 0.1
+near_duplicate_threshold = 0.92
+
+[quality]
+max_chars = 200000
+minimum_quality_score = 0.0
+require_user = true
+require_assistant = false
+near_duplicates = false
+
+[mixture]
+coding = 0.20
+tool_use = 0.20
+agent_trajectories = 0.05
+web_task = 0.15
+planning = 0.10
+debugging = 0.10
+error_recovery = 0.10
+reasoning = 0.05
+business_automation = 0.05
+
+[sources.starcoder]
+id = "OLMo-Coding/starcoder-python-instruct"
+format = "jsonl"
+license = "apache-2.0"
+files = ["python3_chunk_instruct_00.jsonl"]
+max_bytes = 50000000
+recommended = true
+notes = "6.68GB total; default download is capped to one Python 3 JSONL shard."
+
+[sources.toprak]
+id = "Toprak1yu/agent-tool-use-trajectories"
+format = "parquet"
+license = "apache-2.0"
+files = ["data/train-00000-of-00001.parquet"]
+max_bytes = 20000000
+recommended = true
+notes = "10,000 ChatML trajectories; includes tool calls and recovery examples."
+
+[sources.nemotron]
+id = "nvidia/Nemotron-Agentic-v1"
+format = "jsonl"
+license = "cc-by-4.0"
+files = ["data/interactive_agent.jsonl"]
+max_bytes = 50000000
+recommended = true
+notes = "19,028 interactive-agent rows; the tool-calling split is intentionally not downloaded by default."
+
+[sources.neulab]
+id = "neulab/agent-data-collection"
+format = "jsonl"
+license = "per-subset"
+files = [
+    "agenttuning_mind2web/full_std.jsonl",
+    "openhands/full_std.jsonl",
+    "codeactinstruct/full_std.jsonl",
+]
+max_bytes = 60000000
+recommended = true
+notes = "499GB collection; only small, relevant standardized subsets are enabled by default. Large SWE, Mind2Web, and browser subsets require explicit review."
+
+[sources.neulab_mind2web]
+id = "neulab/agent-data-collection"
+format = "jsonl"
+license = "per-subset"
+files = ["agenttuning_mind2web/full_std.jsonl"]
+max_bytes = 1000000
+enabled = true
+recommended = true
+notes = "Small standardized web subset; safe first browser sample."
+
+[sources.neulab_openhands]
+id = "neulab/agent-data-collection"
+format = "jsonl"
+license = "per-subset"
+files = ["openhands/full_std.jsonl"]
+max_bytes = 60000000
+enabled = true
+recommended = true
+notes = "Standardized OpenHands trajectories; bounded before processing."
+
+[sources.neulab_codeact]
+id = "neulab/agent-data-collection"
+format = "jsonl"
+license = "per-subset"
+files = ["codeactinstruct/full_std.jsonl"]
+max_bytes = 40000000
+enabled = true
+recommended = true
+notes = "Standardized code-action trajectories; bounded before processing."
+
+[sources.neulab_swe]
+id = "neulab/agent-data-collection"
+format = "jsonl"
+license = "cc-by-4.0"
+files = ["nebius_SWE-agent-trajectories/full_std.jsonl"]
+max_bytes = 606000000
+enabled = true
+recommended = true
+notes = "ENABLED 2026-09-25 (was disabled, 100 MB cap). Real SWE-agent issue-resolution trajectories. Size verified 604,745,670 bytes against the local inventory manifest."
+
+[sources.neulab_browser]
+id = "neulab/agent-data-collection"
+format = "jsonl"
+license = "mit"
+files = ["swe-gym_openhands_sampled_trajectories/full_std.jsonl"]
+max_bytes = 160000000
+enabled = true
+recommended = true
+notes = "ENABLED 2026-09-25. Real GitHub software tasks with web/tool interaction. Substituted for xlangai/AgentTrek, which was rejected: it declares no license in cardData and none in its README."
+
+[sources.neulab_code_feedback]
+id = "neulab/agent-data-collection"
+format = "jsonl"
+license = "apache-2.0"
+files = ["code_feedback/full_std.jsonl"]
+max_bytes = 379000000
+enabled = true
+recommended = true
+notes = "ADDED 2026-09-25. Execution feedback and iterative code refinement - agentic because it contains observe/act/retry loops. Size verified 377,458,992 bytes."
+
+# ---------------------------------------------------------------------------
+# Agent-weighted acquisition set, added 2026-09-25.
+# Every path and byte size below was verified against the Hugging Face API
+# before the first download. Licenses were read from cardData or the README.
+# ---------------------------------------------------------------------------
+
+[sources.toolace]
+id = "Team-ACE/ToolACE"
+format = "jsonl"
+license = "apache-2.0"
+files = ["data.jsonl"]
+max_bytes = 40000000
+enabled = true
+recommended = true
+notes = "11,300 multi-turn function-calling dialogs over a 26,507-API pool; nested, parallel and dependent calls. Upstream ships a single JSON array (data.json, 37,154,735 bytes) and is converted to JSONL during acquisition. Highest training signal per byte in the set."
+
+[sources.agentforge]
+id = "voxozi/agentforge-multiturn-toolcall"
+format = "jsonl"
+license = "apache-2.0"
+files = ["train.jsonl"]
+max_bytes = 22000000
+enabled = true
+recommended = true
+notes = "5,000 conversations / 18,481 tool calls; 30.5 percent contain genuine tool-failure recovery branches. The only recovery-supervision source in the set."
+
+[sources.hermes_fc]
+id = "NousResearch/hermes-function-calling-v1"
+format = "jsonl"
+license = "apache-2.0"
+files = [
+    "func-calling-singleturn.jsonl",
+    "func-calling.jsonl",
+    "json-mode-agentic.jsonl",
+]
+max_bytes = 48000000
+enabled = true
+recommended = true
+notes = "Trained the Hermes-2-Pro function-calling and JSON-mode behaviours. Upstream ships JSON arrays; converted to JSONL during acquisition. Teaches strict JSON emission, the primary failure mode of small models in tool loops."
+
+[sources.simple_agent]
+id = "LiteMind/Simple-agent-traces"
+format = "jsonl"
+license = "apache-2.0"
+files = ["train.jsonl"]
+max_bytes = 14000000
+enabled = true
+recommended = true
+notes = "605 conversations each truncated to 8,192 tokens with assistant-turn loss labels. Derived from a Hermes agentic split, so treat its tokens as a Hermes subset rather than an independent source."
+
+[sources.starcoder_shards]
+id = "OLMo-Coding/starcoder-python-instruct"
+format = "jsonl"
+license = "apache-2.0"
+files = [
+    "python3_chunk_instruct_01.jsonl",
+    "python3_chunk_instruct_02.jsonl",
+    "python3_chunk_instruct_03.jsonl",
+]
+max_bytes = 1020000000
+enabled = true
+recommended = false
+notes = "ADDED 2026-09-25. Shards 01-03 of the 6.68GB Apache-2.0 corpus, to give the Code-Executor tool real Python signal. Shard 00 is already present at data/training/starcoder_python_instruct.jsonl. Mixture weights cap the resulting CODING category, so this does not skew the final mix."
+
+[sources.self_oss]
+id = "bigcode/self-oss-instruct-sc2-exec-filter-50k"
+format = "parquet"
+license = "odc-by"
+files = ["data/train-00000-of-00001.parquet"]
+max_bytes = 95000000
+enabled = true
+recommended = true
+notes = "50k EXECUTION-VALIDATED Python instruction/response pairs. Highest-quality code data in the set because every response was run."
+
+[sources.magicoder]
+id = "ise-uiuc/Magicoder-OSS-Instruct-75K"
+format = "jsonl"
+license = "mit"
+files = ["data-oss_instruct-decontaminated.jsonl"]
+max_bytes = 205000000
+enabled = true
+recommended = true
+notes = "75k code instructions seeded from real OSS snippets, decontaminated against HumanEval/MBPP/APPS/DS-1000/GSM8K. The only multi-language code source in the set."
+
+[sources.nemotron_ia]
+id = "nvidia/Nemotron-Agentic-v1"
+format = "jsonl"
+license = "cc-by-4.0"
+files = ["data/interactive_agent.jsonl"]
+max_bytes = 450000000
+enabled = true
+recommended = true
+notes = "19,028 LLM-judge-filtered multi-turn agentic trajectories with per-turn goal-alignment scoring. Was already configured in this file but never downloaded. Size verified 448,570,455 bytes."
+
+[sources.smoltalk_magpie]
+id = "HuggingFaceTB/smoltalk"
+format = "parquet"
+license = "apache-2.0"
+files = [
+    "data/smol-magpie-ultra/train-00000-of-00006.parquet",
+    "data/smol-magpie-ultra/train-00001-of-00006.parquet",
+    "data/smol-magpie-ultra/train-00002-of-00006.parquet",
+    "data/smol-magpie-ultra/train-00003-of-00006.parquet",
+    "data/smol-magpie-ultra/train-00004-of-00006.parquet",
+    "data/smol-magpie-ultra/train-00005-of-00006.parquet",
+]
+max_bytes = 1400000000
+enabled = true
+recommended = true
+notes = "Core SmolTalk instruction mix, 1,396,096,926 bytes across 6 shards. Apache-2.0 for the Smol-* subsets per the dataset README."
+
+[sources.smoltalk_core]
+id = "HuggingFaceTB/smoltalk"
+format = "parquet"
+license = "apache-2.0"
+files = [
+    "data/smol-constraints/train-00000-of-00001.parquet",
+    "data/smol-rewrite/train-00000-of-00001.parquet",
+    "data/smol-summarize/train-00000-of-00001.parquet",
+    "data/systemchats-30k/train-00000-of-00001.parquet",
+    "data/everyday-conversations/train-00000-of-00001.parquet",
+    "data/longalign/train-00000-of-00001.parquet",
+]
+max_bytes = 300000000
+enabled = true
+recommended = true
+notes = "Instruction constraints (IFEval-decontaminated), rewrite, summarize, multi-turn system chats, and a long-context slice. All Apache-2.0 Smol-* subsets. Longalign seeds the context/compaction subsystem."

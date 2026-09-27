@@ -1,0 +1,7 @@
+application_name = "AEGISAI"
+environment = "development"
+log_level = "INFO"
+inference_provider = "ollama"
+model_name = "qwen2.5-coder:3b"
+ollama_base_url = "http://127.0.0.1:11434"
+database_path = "data/aegisai.db"

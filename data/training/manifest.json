@@ -1,0 +1,21 @@
+{
+  "prepared_at": "2026-09-24T17:35:30.515734+00:00",
+  "format": "messages",
+  "fields": [
+    "id",
+    "messages",
+    "metadata"
+  ],
+  "dataset_id": "OLMo-Coding/starcoder-python-instruct",
+  "revision": "5bcafbc00100ec7cf1e6e5a9e353dc2f4eaad9fc",
+  "license": "apache-2.0",
+  "source_files": [
+    "python3_chunk_instruct_00.jsonl"
+  ],
+  "output_path": "data\\training\\starcoder_python_instruct.jsonl",
+  "manifest_path": "data\\training\\manifest.json",
+  "downloaded_lines": 10000,
+  "accepted_records": 10000,
+  "skipped_records": 0,
+  "output_bytes": 38393467
+}
